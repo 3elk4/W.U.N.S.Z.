@@ -18,6 +18,8 @@
 #include "collisionmanager.h"
 #include "simpleautomatic.h"
 #include "astar.h"
+#include "BFS.h"
+#include "DFS.h"
 
 using namespace std;
 
@@ -41,12 +43,6 @@ public:
 	//score 
 	void showScore();
 
-    //board
-    //void doBoard();
-    //bool isWunsz(Point point);
-    //bool isBarrier(Point point);
-
-
     //get BoardSize
     static BoxSize getBoardSize() {
         return boardSize;
@@ -64,27 +60,23 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    
+	void setRadioButtons(bool value);	
+	QTimer* algTimer;
+
 	Snake snake;
 	PrizeAndScore prizeAndScore;
-	FrameAndBarrier frameAndbarrier;
+	Obstacles frameAndbarrier;
 	
 	SimpleAutomatic simpleAutomatic;
 	AStar astar;
+	BFS bfs;
+	DFS dfs;
 	
-    
-    //vector<Point> pastSquares;
     vector <vector<int>> board;
-    
-
-    
 
     int posY = 0, posX = 0;
-    //int posPx = 0, posPy = 0;
-
     
     motionMode mode = isHuman;
-    motionScore isBoard = motionScore::empty;
 
     //size
     static BoxSize squareSize;
@@ -93,15 +85,20 @@ private:
     static Point startingPoint;
 
 private slots:
+	void empty_loop();
     void loop();
     void loopAutoSnakeOne();
     void loopTheShortestOne();
+	void loopBFS();
+	void loopDFS();
     void loopPrize();
 
     void on_automat_clicked();
     void on_human_clicked();
     void on_startButton_clicked();
     void on_theShortest_clicked();
+	void on_BFS_clicked();
+	void on_DFS_clicked();
 };
 
 #endif // MAINWINDOW_H

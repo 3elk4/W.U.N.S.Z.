@@ -11,7 +11,9 @@ enum direction {
 enum motionMode {
   isAuto = 1,
   isHuman,
-  isShortest
+  isShortest,
+  isBFS,
+  isDFS,
 };
 
 enum motionScore {
@@ -40,9 +42,8 @@ enum cost {
 
 enum speed {
 	snake = 200,
-	prize = 40000,
-	simpleAutomatic = 50,
-	astar = 50
+	prize = 400000,
+	alg = 50
 };
 
 enum startPosition {

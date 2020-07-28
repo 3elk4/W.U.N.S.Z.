@@ -4,44 +4,55 @@
 
 using namespace std;
 
+//todo: disconnect
 void MainWindow::on_automat_clicked() {
-    mode = isAuto;
+    //mode = isAuto;
+	disconnect(algTimer, SIGNAL(timeout()), 0, 0);
+	connect(algTimer, SIGNAL(timeout()), this, SLOT(loopAutoSnakeOne()));
 }
 
 void MainWindow::on_human_clicked() {
-    mode = isHuman;
+    //mode = isHuman;
+	disconnect(algTimer, SIGNAL(timeout()), 0, 0);
+	connect(algTimer, SIGNAL(timeout()), this, SLOT(empty_loop()));
 }
 
 void MainWindow::on_theShortest_clicked(){
-    mode = isShortest;
+    //mode = isShortest;
+	disconnect(algTimer, SIGNAL(timeout()), 0, 0);
+	connect(algTimer, SIGNAL(timeout()), this, SLOT(loopTheShortestOne()));
 }
 
-//tu poprawic dla the shortest + napisać oddzielnego loopa
+void MainWindow::on_BFS_clicked() {
+	//mode = isBFS;
+	disconnect(algTimer, SIGNAL(timeout()), 0, 0);
+	connect(algTimer, SIGNAL(timeout()), this, SLOT(loopBFS()));
+}
+
+void MainWindow::on_DFS_clicked() {
+	//mode = isDFS;
+	disconnect(algTimer, SIGNAL(timeout()), 0, 0);
+	connect(algTimer, SIGNAL(timeout()), this, SLOT(loopDFS()));
+}
+
+void MainWindow::setRadioButtons(bool value) {
+	ui->automat->setEnabled(value);
+	ui->human->setEnabled(value);
+	ui->theShortest->setEnabled(value);
+	ui->BFS->setEnabled(value);
+	ui->DFS->setEnabled(value);
+}
+
 void MainWindow::on_startButton_clicked() {
     if(ui->startButton->text().toStdString() == "STOP"){
-		ui->automat->setEnabled(true);
-		ui->human->setEnabled(true);
-		ui->theShortest->setEnabled(true);
-
-		simpleAutomatic.getTimer()->stop();
-		astar.getTimer()->stop();
+		setRadioButtons(true);
 		snake.getTimer()->stop();
-
+		algTimer->stop();
 		ui->startButton->setText("START");
     }
     else {
-		ui->automat->setEnabled(false);
-		ui->human->setEnabled(false);
-		ui->theShortest->setEnabled(false);
-
-		if (mode == isAuto) {
-			simpleAutomatic.getTimer()->start(speed::simpleAutomatic);
-			astar.getTimer()->stop();
-		}
-		else if (mode == isShortest) {
-			astar.getTimer()->start(speed::astar);
-			simpleAutomatic.getTimer()->stop();
-		}
+		setRadioButtons(false);
+		algTimer->start(speed::alg);
 		snake.getTimer()->start(speed::snake);
 		ui->startButton->setText("STOP");
     }

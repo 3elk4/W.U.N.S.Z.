@@ -172,6 +172,8 @@
     <QtUic />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BFS.cpp" />
+    <ClCompile Include="DFS.cpp" />
     <ClCompile Include="simpleautomatic.cpp" />
     <ClCompile Include="barrier.cpp" />
     <ClCompile Include="board.cpp" />
@@ -188,11 +190,13 @@
   <ItemGroup>
     <ClInclude Include="astar.h" />
     <ClInclude Include="barrier.h" />
+    <ClInclude Include="BFS.h" />
     <ClInclude Include="boxsize.h" />
     <ClInclude Include="collisionmanager.h" />
     <ClInclude Include="constants.h" />
     <QtMoc Include="mainwindow.h">
     </QtMoc>
+    <ClInclude Include="DFS.h" />
     <ClInclude Include="frameandbarrier.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="prizeAndScore.h" />

@@ -7,10 +7,10 @@
 #include "constants.h"
 #include "barrier.h"
 
-class FrameAndBarrier {
+class Obstacles {
 public:
-	FrameAndBarrier();
-	~FrameAndBarrier();
+	Obstacles();
+	~Obstacles();
 
 	set<Point> getFrame();
 	void initFrame();

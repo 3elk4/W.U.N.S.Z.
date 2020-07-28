@@ -4,7 +4,8 @@
 
 using namespace std;
 
-//TODO: posprawdzać czy aby na pewno taki boardsize ma być
+void MainWindow::empty_loop(){}
+
 void MainWindow::loop() {
 	switch (snake.getHead()) {
 		case direction::up:
@@ -20,23 +21,6 @@ void MainWindow::loop() {
 			snake.setHeadPosition(Point(snake.getHeadPosition().x - squareSize.boxWidth, snake.getHeadPosition().y));
 			break;
 	}
-	/*
-	if(snake.getHead() == 1){
-            //w gore
-            posWy = (posWy - 10) % boardSize.boxHeight;
-        }
-        else if(head == 2){
-            //w prawo
-            posWx = (posWx + 10) % boardSize.boxWidth;
-        }
-        else if(head == 3){
-            // w dol
-            posWy = (posWy + 10) % boardSize.boxHeight;
-        }
-        else{
-            posWx = (posWx - 10) % boardSize.boxWidth;
-        }
-	*/
         
     //funckje odnośnie snake'a jedzonka, punktów, kolizji
 	snake.initBody();
@@ -54,8 +38,15 @@ void MainWindow::loopAutoSnakeOne(){
 }
 
 void MainWindow::loopTheShortestOne(){
-    //doBoard();
     astar.astar(snake, prizeAndScore, frameAndbarrier);
+}
+
+void MainWindow::loopBFS() {
+	bfs.bfs(snake, prizeAndScore, frameAndbarrier);
+}
+
+void MainWindow::loopDFS() {
+	dfs.dfs(snake, prizeAndScore, frameAndbarrier);
 }
 
 void MainWindow::loopPrize(){

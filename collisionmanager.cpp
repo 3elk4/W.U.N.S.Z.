@@ -6,7 +6,7 @@ CollisionManager::CollisionManager() {
 
 #pragma region PRIZE
 
-void CollisionManager::initPrizePosition(Snake &snake, FrameAndBarrier &frameAndBarrier, PrizeAndScore &prizeAndscore) {
+void CollisionManager::initPrizePosition(Snake &snake, Obstacles &frameAndBarrier, PrizeAndScore &prizeAndscore) {
 	vector<Point> emptyFields;
 
 	set<Point> frame = frameAndBarrier.getFrame();
@@ -24,7 +24,7 @@ void CollisionManager::initPrizePosition(Snake &snake, FrameAndBarrier &frameAnd
 	prizeAndscore.setPrizePosition(emptyFields.at(qrand() % emptyFields.size()));
 }
 
-bool CollisionManager::isPrizeGained(Snake &snake, FrameAndBarrier &frameAndBarrier, PrizeAndScore &prizeAndScore) {
+bool CollisionManager::isPrizeGained(Snake &snake, Obstacles &frameAndBarrier, PrizeAndScore &prizeAndScore) {
 	Point head = snake.getHeadPosition();
 	Point prize = prizeAndScore.getPrizePosition();
 	
@@ -43,7 +43,7 @@ bool CollisionManager::isPrizeGained(Snake &snake, FrameAndBarrier &frameAndBarr
 
 #pragma region SNAKE
 
-bool CollisionManager::checkSnakeCollisionAbility(Snake &snake, FrameAndBarrier &frameAndBarrier) {
+bool CollisionManager::checkSnakeCollisionAbility(Snake &snake, Obstacles &frameAndBarrier) {
 	Point head = snake.getHeadPosition();
 	set<Point> frame = frameAndBarrier.getFrame();
 	vector<Point> barrierBody = frameAndBarrier.getBarrier()->getBarrierShape();
@@ -63,11 +63,31 @@ bool CollisionManager::checkSnakeCollisionAbility(Snake &snake, FrameAndBarrier 
 	return false;
 }
 
+bool CollisionManager::checkSnakeCollisionAbility(const Point & snakeHead, Snake & snake, Obstacles & frameAndBarrier)
+{
+	set<Point> frame = frameAndBarrier.getFrame();
+	vector<Point> barrierBody = frameAndBarrier.getBarrier()->getBarrierShape();
+	vector<Point> body = snake.getSnakeBody();
+
+	if (frame.find(snakeHead) != frame.end()) {
+		return true;
+	}
+	else if (find(barrierBody.begin(), barrierBody.end(), snakeHead) != barrierBody.end()) {
+		return true;
+	}
+	else if (body.size() > 1) {
+		if (find(body.begin() + 1, body.end(), snakeHead) != body.end())
+			return true;
+	}
+
+	return false;
+}
+
 #pragma endregion SNAKE
 
 #pragma region BARRIER
 //barrier - set a position as second thing - easier
-void CollisionManager::initBarrierPosition(FrameAndBarrier &frameAndBarrier) {
+void CollisionManager::initBarrierPosition(Obstacles &frameAndBarrier) {
 	vector<Point> emptyFields;
 	set<Point> frame = frameAndBarrier.getFrame();
 
@@ -89,7 +109,7 @@ void CollisionManager::initBarrierPosition(FrameAndBarrier &frameAndBarrier) {
 
 #pragma region ASTAR
 //astar
-int CollisionManager::collisionPossibility(Point probPoint, Snake &snake, FrameAndBarrier &frameAndBarrier) {
+int CollisionManager::collisionPossibility(Point probPoint, Snake &snake, Obstacles &frameAndBarrier) {
 	for (auto point : snake.getSnakeBody()) {
 		if (probPoint == point) return cost::hightCost;
 	}
@@ -104,7 +124,6 @@ int CollisionManager::collisionPossibility(Point probPoint, Snake &snake, FrameA
 
 	return cost::lowCost;
 }
-
 #pragma endregion ASTAR
 
 CollisionManager::~CollisionManager() {

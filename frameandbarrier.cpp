@@ -2,17 +2,17 @@
 #include "ui_mainwindow.h"
 #include "frameandbarrier.h"
 
-FrameAndBarrier::FrameAndBarrier() {
+Obstacles::Obstacles() {
 	frameSize = BoxSize(MainWindow::getBoardSize());
 	frameStartingPoint = Point(MainWindow::getStartingPoint());
 	initFrame();
 }
 
-set<Point> FrameAndBarrier::getFrame() {
+set<Point> Obstacles::getFrame() {
 	return frame;
 }
 
-void FrameAndBarrier::initFrame() {
+void Obstacles::initFrame() {
 	frame.clear();
 	for (int i = frameStartingPoint.y; i < frameSize.boxHeight; i += MainWindow::getSquareSize().boxHeight) {
 		frame.insert(Point(frameStartingPoint.x, i));
@@ -27,30 +27,30 @@ void FrameAndBarrier::initFrame() {
 }
 
 
-BoxSize FrameAndBarrier::getFrameSize() {
+BoxSize Obstacles::getFrameSize() {
 	return this->frameSize;
 }
 
-void FrameAndBarrier::setFrameSize(BoxSize fs) {
+void Obstacles::setFrameSize(BoxSize fs) {
 	this->frameSize = BoxSize(fs.boxWidth, fs.boxHeight);
 }
 
-Point FrameAndBarrier::getFrameStaringPoint() {
+Point Obstacles::getFrameStaringPoint() {
 	return this->frameStartingPoint;
 }
-void FrameAndBarrier::setFrameStartingPoint(Point p) {
+void Obstacles::setFrameStartingPoint(Point p) {
 	this->frameStartingPoint = Point(p.x, p.y);
 }
 
-Barrier* FrameAndBarrier::getBarrier() {
+Barrier* Obstacles::getBarrier() {
 	return obstacle;
 }
 
-void FrameAndBarrier::setBarrier(Barrier *barrier) {
+void Obstacles::setBarrier(Barrier *barrier) {
 	this->obstacle = barrier;
 }
 
-FrameAndBarrier::~FrameAndBarrier() {
+Obstacles::~Obstacles() {
 	frame.clear();
 	//if(this->obstacle != nullptr) delete obstacle;
 }

@@ -17,17 +17,20 @@ public:
 	~CollisionManager();
 
 	//prize
-	static void initPrizePosition(Snake &snake, FrameAndBarrier &frameAndBarrier, PrizeAndScore &prizeAndscore);
-	static bool isPrizeGained(Snake &snake, FrameAndBarrier &frameAndBarrier, PrizeAndScore &prizeAndScore);
+	static void initPrizePosition(Snake &snake, Obstacles &frameAndBarrier, PrizeAndScore &prizeAndscore);
+	static bool isPrizeGained(Snake &snake, Obstacles &frameAndBarrier, PrizeAndScore &prizeAndScore);
 
 	//snake
-	static bool checkSnakeCollisionAbility(Snake &snake, FrameAndBarrier &frameAndBarrier);
+	static bool checkSnakeCollisionAbility(Snake &snake, Obstacles &frameAndBarrier);
 	
 	//barrier
-	static void initBarrierPosition(FrameAndBarrier &frameAndBarrier);
+	static void initBarrierPosition(Obstacles &frameAndBarrier);
 
 	//astar
-	static int collisionPossibility(Point probPtk, Snake &snake, FrameAndBarrier &frameAndBarrier);
+	static int collisionPossibility(Point probPtk, Snake &snake, Obstacles &frameAndBarrier);
+
+	//dfs, bfs
+	static bool checkSnakeCollisionAbility(const Point & snakeHead, Snake &snake, Obstacles &frameAndBarrier);
 
 private:
 };

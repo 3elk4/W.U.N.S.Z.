@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <QTimer>
+#include <QMainWindow>
 #include <set>
 #include "point.h"
 #include "constants.h"

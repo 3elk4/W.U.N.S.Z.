@@ -8,22 +8,15 @@ AStar::AStar() {
 }
 
 AStar::~AStar() {
-	if(this->aStarTimer != nullptr)
-		delete this->aStarTimer;
-}
-
-
-
-QTimer* AStar::getTimer() {
-	return this->aStarTimer;
-}
-
-void AStar::setTimer(QMainWindow *window) {
-	this->aStarTimer = new QTimer(window);
 }
 
 vector<Point> AStar::getPath() {
 	return this->path;
+}
+
+void AStar::clearPath()
+{
+	this->path.clear();
 }
 
 
@@ -59,7 +52,7 @@ void AStar::clearAll() {
 }
 
 
-void AStar::astar(Snake &snake, PrizeAndScore &prizeAndScore, FrameAndBarrier &frameAndBarrier) {
+void AStar::astar(Snake &snake, PrizeAndScore &prizeAndScore, Obstacles &frameAndBarrier) {
 	//preparing to 
 	clearAll();
 

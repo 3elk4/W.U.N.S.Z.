@@ -14,14 +14,10 @@ public:
 	SimpleAutomatic();
 	~SimpleAutomatic();
 
-	QTimer* getTimer();
-	void setTimer(QMainWindow *window);
-
 	direction chooseDirection(Snake &snake, PrizeAndScore &prizeAndScore);
 	direction checkDirection(direction chosen, direction head);
 
 private:
-	QTimer *simpleAutomaticTimer = nullptr;
 	Point delta;
 };
 

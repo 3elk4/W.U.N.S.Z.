@@ -13,20 +13,16 @@ public:
 	AStar();
 	~AStar();
 
-	QTimer* getTimer();
-	void setTimer(QMainWindow *window);
-
 	vector<Point> getPath();
+	void clearPath();
 	
 	void clearAll();
 	
 	int heuristic(Point first, Point second);
-	void astar(Snake &snake, PrizeAndScore &prizeAndScore, FrameAndBarrier &frameAndBarrier);
+	void astar(Snake &snake, PrizeAndScore &prizeAndScore, Obstacles &frameAndBarrier);
 	vector<Point> recontructPath(map <Point, Point> &cameFrom, const Point &current);
 
 private:
-	QTimer *aStarTimer = nullptr;
-
 	vector <Point> path;
 
 	vector <Point> openSet;

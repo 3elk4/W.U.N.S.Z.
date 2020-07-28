@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent), ui(new Ui::MainWind
 	snake = Snake();
 	prizeAndScore = PrizeAndScore();
 
-	frameAndbarrier = FrameAndBarrier();
+	frameAndbarrier = Obstacles();
 	frameAndbarrier.setBarrier(new snailBarrier());
 	CollisionManager::initBarrierPosition(frameAndbarrier);
 	frameAndbarrier.getBarrier()->initBarrier();
@@ -52,12 +52,9 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent), ui(new Ui::MainWind
 	prizeAndScore.getTimer()->start(speed::prize);
 
 	//autosnake
-	simpleAutomatic.setTimer(this);
-    connect(simpleAutomatic.getTimer(), SIGNAL(timeout()), this, SLOT(loopAutoSnakeOne()));
-
-	//theshortest
-	astar.setTimer(this);
-    connect(astar.getTimer(), SIGNAL(timeout()), this, SLOT(loopTheShortestOne()));
+	algTimer = new QTimer(this);
+    connect(algTimer, SIGNAL(timeout()), this, SLOT(empty_loop()));
+	algTimer->start(speed::alg);
 
 	CollisionManager::initPrizePosition(snake, frameAndbarrier, prizeAndScore);
 }
@@ -122,6 +119,21 @@ void MainWindow::paintEvent(QPaintEvent* event){
 	for (Point pathField : astar.getPath()) {
 		paint.drawRect(pathField.x, pathField.y, squareSize.boxWidth, squareSize.boxHeight);
 	}
+	astar.clearPath();
+
+	//path - bfs
+	paint.setBrush(Qt::Dense4Pattern);
+	for (Point pathField : bfs.getPath()) {
+		paint.drawRect(pathField.x, pathField.y, squareSize.boxWidth, squareSize.boxHeight);
+	}
+	bfs.clearPath();
+
+	//path - dfs
+	paint.setBrush(Qt::Dense4Pattern);
+	for (Point pathField : dfs.getPath()) {
+		paint.drawRect(pathField.x, pathField.y, squareSize.boxWidth, squareSize.boxHeight);
+	}
+	dfs.clearPath();
 
 	//food
 	paint.setBrush(Qt::green);
